@@ -2,7 +2,7 @@
   "name": "food-delivery-app",
   "version": "1.0.0",
   "description": "A backend server for a food delivery application using Node.js and Express",
-  "main": "server.js",
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
