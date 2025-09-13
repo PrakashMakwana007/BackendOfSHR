@@ -16,7 +16,10 @@ app.use(cookieParser());
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.use(cors({
-  origin: "http://localhost:5173", // exact frontend URL
+  origin: [
+    "http://localhost:5173",
+    "https://fronten-of-shr.vercel.app"  
+  ], // exact frontend URL
   credentials: true, // allow cookies to be sent
 }));
 
