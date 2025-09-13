@@ -101,12 +101,18 @@ const login = asyncHandler(async (req, res) => {
     "-password -refreshToken"
   );
 
-  const options = { httpOnly: true, secure: true };
+const cookieOptions = {
+  httpOnly: true,
+  secure: true,       // Must be true for HTTPS (Vercel + Render)
+  sameSite: "none",   // Important for cross-origin
+  maxAge: 24 * 60 * 60 * 1000, // 1 day
+};
+
 
   return res
     .status(200)
-    .cookie("accessToken", accessToken, options)
-    .cookie("refreshToken", refreshToken, options)
+    .cookie("accessToken", accessToken, cookieOptions)
+    .cookie("refreshToken", refreshToken, cookieOptions)
     .json(
       new apiResponse(
         200,
@@ -119,12 +125,13 @@ const login = asyncHandler(async (req, res) => {
 // Logout
 const logout = asyncHandler(async (req, res) => {
   await User.findByIdAndUpdate(req.user._id, { refreshToken: undefined });
-   // Clear cookies from client
-  res.clearCookie("accessToken");
-  res.clearCookie("refreshToken");
-  return res
-    .status(200)
-    .json(new apiResponse(200, null, "Logout successful"));
+  
+res
+  .clearCookie("accessToken", { httpOnly: true, secure: true, sameSite: "none" })
+  .clearCookie("refreshToken", { httpOnly: true, secure: true, sameSite: "none" })
+  .status(200)
+  .json(new apiResponse(200, null, "Logout successful"));
+
 });
 
 // Refresh Access Token
