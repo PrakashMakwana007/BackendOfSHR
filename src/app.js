@@ -18,6 +18,10 @@ app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.use(cors({
   origin: [
     "http://localhost:5173",
+    "https://fronten-of-shr.vercel.app/",
+    "https://fronten-of-shr-makwana-prakashs-projects.vercel.app/",
+    "https://fronten-of-shr-git-main-makwana-prakashs-projects.vercel.app/",
+    "https://fronten-of-cr9yflpea-makwana-prakashs-projects.vercel.app/",
     "https://fronten-of-shr.vercel.app"  
   ], // exact frontend URL
   credentials: true, // allow cookies to be sent
